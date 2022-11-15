@@ -26,7 +26,7 @@ const SavedShows = () => {
 
         useEffect(() => {
         onSnapshot(doc(db,"users", `${user?.email}`), (doc) => {
-            setMovies(doc.data()?.savedShow)
+            setMovies(doc.data()?.savedShows)
         })
         },[user?.email])
 
@@ -36,7 +36,7 @@ const SavedShows = () => {
             try {
                 const result = movies.filter(item => item.id !== id)
                 await updateDoc(movieRef,{
-                savedShow:result,
+                savedShows:result,
                 })
             } catch (error) {
                 console.log(error)
@@ -53,12 +53,12 @@ const SavedShows = () => {
      size={40} 
      className="bg-white rounded-full absolute left-0 opacity-50 hover:opacity-100 text-black cursor-pointer z-10 hidden  group-hover:block"/> 
 
-        <div id={'slider'} className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative">
-         
-            {movies.map((item, id) => (
+        <div id={'slider'} className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative">    
+            {
+            movies.map((item, id) => (
             <div key={id} className='relative w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer mx-2'>
 
-            <img className='w-full h-auto block' src={`https://image.tmdb.org/t/p/w500/${item?.img}`} alt={item.title} />
+            <img className='w-full h-auto block' src={`https://image.tmdb.org/t/p/w500/${item?.img}`} alt={item?.title} />
             <div className="absolute top-0 left-0 w-full h-full hover:bg-black/80 opacity-0 hover:opacity-100 text-white ">
                 <p className='flex justify-center items-center  text-xs md:text-sm font-bold h-full w-full text-center'>
                     {item?.title}
